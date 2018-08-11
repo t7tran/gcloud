@@ -27,6 +27,8 @@ RUN apk --no-cache add \
     echo -e '[compute]\ngce_metadata_read_timeout_sec = 30' >> /google-cloud-sdk/properties && \
 # install beta components
     gcloud components install beta -q && \
+# prepare config folder for non-root user
+    mkdir /.config && chmod 777 /.config && \
     apk add --no-cache jq coreutils && \
     chmod +x /*.sh
 
