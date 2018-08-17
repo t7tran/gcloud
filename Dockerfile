@@ -30,6 +30,12 @@ RUN apk --no-cache add \
 # install cloud_sql_proxy
     curl https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -o /usr/local/bin/cloud_sql_proxy && \
     chmod +x /usr/local/bin/cloud_sql_proxy && \
+# install rclone
+    cd /tmp && \
+    curl https://downloads.rclone.org/rclone-current-linux-amd64.zip -o rclone.zip && \
+    unzip rclone.zip && \
+    mv rclone-v*/rclone* /usr/local/bin && \
+    rm -rf rclone* && \
 # prepare config folder for non-root user
     mkdir /.config && chmod 777 /.config && \
     apk add --no-cache jq coreutils mysql-client && \
