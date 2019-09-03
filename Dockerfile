@@ -1,7 +1,7 @@
 # copied from google/cloud-sdk with latest alpine and sdk versions
 FROM alpine:3.10
 
-ENV CLOUD_SDK_VERSION=242.0.0 \
+ENV CLOUD_SDK_VERSION=260.0.0 \
     PATH=/google-cloud-sdk/bin:$PATH
 
 COPY ./ /
