@@ -4,7 +4,7 @@ FROM alpine:3.10
 ENV CLOUD_SDK_VERSION=260.0.0 \
     PATH=/google-cloud-sdk/bin:$PATH
 
-COPY ./ /
+COPY ./entrypoint.sh /
 
 RUN apk --no-cache add \
         curl \
@@ -23,6 +23,9 @@ RUN apk --no-cache add \
     gcloud config set metrics/environment github_docker_image && \
     gcloud --version && \
 # finish copied
+# add non-privileged user
+    addgroup alpine && adduser -s /bin/bash -D -G alpine alpine && \
+    chmod 777 /home/alpine &&
 # fix short socket timeout
     echo -e '[compute]\ngce_metadata_read_timeout_sec = 30' >> /google-cloud-sdk/properties && \
 # install beta components
@@ -36,9 +39,19 @@ RUN apk --no-cache add \
     unzip rclone.zip && \
     mv rclone-v*/rclone* /usr/local/bin && \
     rm -rf rclone* && \
+# install kubectl
+    kubectlversion=1.13.7 && \
+    cd /usr/local/bin && \
+    wget https://storage.googleapis.com/kubernetes-release/release/v${kubectlversion}/bin/linux/amd64/kubectl -O kubectl-${kubectlversion} && \
+    chmod +x kubectl-${kubectlversion} && \
+    ln -s kubectl-${kubectlversion} kubectl && \
 # prepare config folder for non-root user
     mkdir /.config && chmod 777 /.config && \
     apk add --no-cache jq coreutils mysql-client && \
     chmod +x /*.sh
+
+ENV HOME /home/alpine
+USER alpine
+WORKDIR /home/alpine
 
 ENTRYPOINT ["/entrypoint.sh"]
