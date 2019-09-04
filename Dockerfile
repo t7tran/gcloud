@@ -47,7 +47,7 @@ RUN apk --no-cache add \
     ln -s kubectl-${kubectlversion} kubectl && \
 # prepare config folder for non-root user
     mkdir /.config && chmod 777 /.config && \
-    apk add --no-cache jq coreutils mysql-client && \
+    apk add --no-cache jq coreutils mysql-client grep && \
     chmod +x /*.sh
 
 ENV HOME /home/alpine
