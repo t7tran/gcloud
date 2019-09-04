@@ -25,7 +25,7 @@ RUN apk --no-cache add \
 # finish copied
 # add non-privileged user
     addgroup alpine && adduser -s /bin/bash -D -G alpine alpine && \
-    chmod 777 /home/alpine &&
+    chmod 777 /home/alpine && \
 # fix short socket timeout
     echo -e '[compute]\ngce_metadata_read_timeout_sec = 30' >> /google-cloud-sdk/properties && \
 # install beta components
