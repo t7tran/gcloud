@@ -1,9 +1,9 @@
-FROM alpine/helm:2.14.1 AS helm
+FROM alpine/helm:2.16.1 AS helm
 
 # copied from google/cloud-sdk with latest alpine and sdk versions
-FROM alpine:3.10
+FROM alpine:3.11
 
-ENV CLOUD_SDK_VERSION=260.0.0 \
+ENV CLOUD_SDK_VERSION=274.0.0 \
     PATH=/google-cloud-sdk/bin:$PATH
 
 COPY --from=helm /usr/bin/helm /usr/local/bin/helm
@@ -43,7 +43,7 @@ RUN apk --no-cache add \
     mv rclone-v*/rclone* /usr/local/bin && \
     rm -rf rclone* && \
 # install kubectl
-    kubectlversion=1.13.7 && \
+    kubectlversion=1.14.9 && \
     cd /usr/local/bin && \
     wget https://storage.googleapis.com/kubernetes-release/release/v${kubectlversion}/bin/linux/amd64/kubectl -O kubectl-${kubectlversion} && \
     chmod +x kubectl-${kubectlversion} && \
