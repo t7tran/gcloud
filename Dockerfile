@@ -43,7 +43,7 @@ RUN apk --no-cache add \
     mv rclone-v*/rclone* /usr/local/bin && \
     rm -rf rclone* && \
 # install kubectl
-    kubectlversion=1.14.9 && \
+    kubectlversion=1.15.11 && \
     cd /usr/local/bin && \
     wget https://storage.googleapis.com/kubernetes-release/release/v${kubectlversion}/bin/linux/amd64/kubectl -O kubectl-${kubectlversion} && \
     chmod +x kubectl-${kubectlversion} && \
