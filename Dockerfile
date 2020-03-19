@@ -1,4 +1,4 @@
-FROM alpine/helm:2.16.1 AS helm
+FROM alpine/helm:2.16.3 AS helm
 
 # copied from google/cloud-sdk with latest alpine and sdk versions
 FROM alpine:3.11
