@@ -3,7 +3,7 @@ FROM alpine/helm:2.16.3 AS helm
 # copied from google/cloud-sdk with latest alpine and sdk versions
 FROM alpine:3.11
 
-ENV CLOUD_SDK_VERSION=274.0.0 \
+ENV CLOUD_SDK_VERSION=285.0.1 \
     PATH=/google-cloud-sdk/bin:$PATH
 
 COPY --from=helm /usr/bin/helm /usr/local/bin/helm
