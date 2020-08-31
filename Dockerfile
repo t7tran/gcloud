@@ -1,9 +1,13 @@
-FROM alpine/helm:2.16.3 AS helm
+FROM alpine/helm:2.16.9 AS helm
 
 # copied from google/cloud-sdk with latest alpine and sdk versions
-FROM alpine:3.11
+FROM alpine:3.12
 
-ENV CLOUD_SDK_VERSION=285.0.1 \
+# https://cloud.google.com/sdk/docs/release-notes
+# https://github.com/kubernetes/kubernetes/releases
+ENV CLOUD_SDK_VERSION=307.0.0 \
+    KUBECTL_VERSION=1.18.8 \
+    SQLPROXY_VERSION=1.17 \
     PATH=/google-cloud-sdk/bin:$PATH
 
 COPY --from=helm /usr/bin/helm /usr/local/bin/helm
@@ -11,7 +15,7 @@ COPY ./entrypoint.sh /
 
 RUN apk --no-cache add \
         curl \
-        python \
+        python3 \
         py-crcmod \
         bash \
         libc6-compat \
@@ -34,20 +38,19 @@ RUN apk --no-cache add \
 # install beta components
     gcloud components install beta -q && \
 # install cloud_sql_proxy
-    curl https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -o /usr/local/bin/cloud_sql_proxy && \
+    curl -fsSL https://storage.googleapis.com/cloudsql-proxy/v$SQLPROXY_VERSION/cloud_sql_proxy.linux.amd64 -o /usr/local/bin/cloud_sql_proxy && \
     chmod +x /usr/local/bin/cloud_sql_proxy && \
 # install rclone
     cd /tmp && \
-    curl https://downloads.rclone.org/rclone-current-linux-amd64.zip -o rclone.zip && \
+    curl -fsSL https://downloads.rclone.org/rclone-current-linux-amd64.zip -o rclone.zip && \
     unzip rclone.zip && \
     mv rclone-v*/rclone* /usr/local/bin && \
     rm -rf rclone* && \
 # install kubectl
-    kubectlversion=1.15.11 && \
     cd /usr/local/bin && \
-    wget https://storage.googleapis.com/kubernetes-release/release/v${kubectlversion}/bin/linux/amd64/kubectl -O kubectl-${kubectlversion} && \
-    chmod +x kubectl-${kubectlversion} && \
-    ln -s kubectl-${kubectlversion} kubectl && \
+    curl -fsSL https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl-${KUBECTL_VERSION} && \
+    chmod +x kubectl-${KUBECTL_VERSION} && \
+    ln -s kubectl-${KUBECTL_VERSION} kubectl && \
 # prepare config folder for non-root user
     mkdir /.config && chmod 777 /.config && \
     apk add --no-cache jq coreutils mysql-client grep && \
