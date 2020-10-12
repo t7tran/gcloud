@@ -8,12 +8,14 @@ FROM alpine:3.12
 ENV CLOUD_SDK_VERSION=307.0.0 \
     KUBECTL_VERSION=1.18.8 \
     SQLPROXY_VERSION=1.17 \
+    SHELL2HTTP_VERSION=1.13 \
     PATH=/google-cloud-sdk/bin:$PATH
 
 COPY --from=helm /usr/bin/helm /usr/local/bin/helm
 COPY ./entrypoint.sh /
 
 RUN apk --no-cache add \
+        tar \
         curl \
         python3 \
         py-crcmod \
@@ -51,10 +53,15 @@ RUN apk --no-cache add \
     curl -fsSL https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl-${KUBECTL_VERSION} && \
     chmod +x kubectl-${KUBECTL_VERSION} && \
     ln -s kubectl-${KUBECTL_VERSION} kubectl && \
+# install shell2http
+    curl -fsSL https://github.com/msoap/shell2http/releases/download/$SHELL2HTTP_VERSION/shell2http-${SHELL2HTTP_VERSION}.linux.amd64.tar.gz | \
+    tar -C /usr/local/bin -xvzf -  --wildcards --no-anchored shell2http && \
 # prepare config folder for non-root user
     mkdir /.config && chmod 777 /.config && \
     apk add --no-cache jq coreutils mysql-client grep && \
-    chmod +x /*.sh
+    chmod +x /*.sh && \
+# clean up
+    rm -rf /apk /tmp/* /var/cache/apk/*
 
 ENV HOME /home/alpine
 USER alpine
