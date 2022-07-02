@@ -1,14 +1,14 @@
-FROM alpine/helm:2.16.9 AS helm
+FROM alpine/helm:2.17.0 AS helm
 
 # copied from google/cloud-sdk with latest alpine and sdk versions
-FROM alpine:3.12
+FROM alpine:3.15
 
 # https://cloud.google.com/sdk/docs/release-notes
 # https://github.com/kubernetes/kubernetes/releases
-ENV CLOUD_SDK_VERSION=313.0.0 \
-    KUBECTL_VERSION=1.18.8 \
-    SQLPROXY_VERSION=1.17 \
-    SHELL2HTTP_VERSION=1.13 \
+ENV CLOUD_SDK_VERSION=392.0.0 \
+    KUBECTL_VERSION=1.23.8 \
+    SQLPROXY_VERSION=1.31.0 \
+    SHELL2HTTP_VERSION=1.14.1 \
     PATH=/google-cloud-sdk/bin:$PATH
 
 COPY --from=helm /usr/bin/helm /usr/local/bin/helm
@@ -50,11 +50,11 @@ RUN apk --no-cache add \
     rm -rf rclone* && \
 # install kubectl
     cd /usr/local/bin && \
-    curl -fsSL https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl -o kubectl-${KUBECTL_VERSION} && \
+    curl -fsSL https://dl.k8s.io/v${KUBECTL_VERSION}/bin/linux/arm64/kubectl -o kubectl-${KUBECTL_VERSION} && \
     chmod +x kubectl-${KUBECTL_VERSION} && \
     ln -s kubectl-${KUBECTL_VERSION} kubectl && \
 # install shell2http
-    curl -fsSL https://github.com/msoap/shell2http/releases/download/$SHELL2HTTP_VERSION/shell2http-${SHELL2HTTP_VERSION}.linux.amd64.tar.gz | \
+    curl -fsSL https://github.com/msoap/shell2http/releases/download/v${SHELL2HTTP_VERSION}/shell2http_${SHELL2HTTP_VERSION}_linux_amd64.tar.gz | \
     tar -C /usr/local/bin -xvzf -  --wildcards --no-anchored shell2http && \
 # prepare config folder for non-root user
     mkdir /.config && chmod 777 /.config && \
