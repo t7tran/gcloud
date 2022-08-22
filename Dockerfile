@@ -5,7 +5,7 @@ FROM alpine:3.15
 
 # https://cloud.google.com/sdk/docs/release-notes
 # https://github.com/kubernetes/kubernetes/releases
-ENV CLOUD_SDK_VERSION=392.0.0 \
+ENV CLOUD_SDK_VERSION=398.0.0 \
     KUBECTL_VERSION=1.23.8 \
     SQLPROXY_VERSION=1.31.0 \
     SHELL2HTTP_VERSION=1.14.2 \
