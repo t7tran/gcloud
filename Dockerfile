@@ -1,7 +1,7 @@
 FROM alpine/helm:2.17.0 AS helm
 
 # copied from google/cloud-sdk with latest alpine and sdk versions
-FROM alpine:3.15
+FROM alpine:3.16
 
 # https://cloud.google.com/sdk/docs/release-notes
 # https://github.com/kubernetes/kubernetes/releases
