@@ -6,8 +6,8 @@ FROM alpine:3.16
 # https://cloud.google.com/sdk/docs/release-notes
 # https://github.com/kubernetes/kubernetes/releases
 ENV CLOUD_SDK_VERSION=398.0.0 \
-    KUBECTL_VERSION=1.23.8 \
-    SQLPROXY_VERSION=1.31.0 \
+    KUBECTL_VERSION=1.24.4 \
+    SQLPROXY_VERSION=1.31.2 \
     SHELL2HTTP_VERSION=1.14.2 \
     PATH=/google-cloud-sdk/bin:$PATH
 
