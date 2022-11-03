@@ -3,11 +3,13 @@ FROM alpine/helm:2.17.0 AS helm
 # copied from google/cloud-sdk with latest alpine and sdk versions
 FROM alpine:3.16
 
-# https://cloud.google.com/sdk/docs/release-notes
-# https://github.com/kubernetes/kubernetes/releases
-ENV CLOUD_SDK_VERSION=398.0.0 \
-    KUBECTL_VERSION=1.24.4 \
-    SQLPROXY_VERSION=1.31.2 \
+    # https://cloud.google.com/sdk/docs/release-notes
+ENV CLOUD_SDK_VERSION=407.0.0 \
+    # https://github.com/kubernetes/kubernetes/releases
+    KUBECTL_VERSION=1.25.3 \
+    # https://github.com/GoogleCloudPlatform/cloud-sql-proxy/releases
+    SQLPROXY_VERSION=1.33.0 \
+   # https://github.com/msoap/shell2http/releases
     SHELL2HTTP_VERSION=1.14.2 \
     PATH=/google-cloud-sdk/bin:$PATH
 
