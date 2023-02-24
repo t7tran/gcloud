@@ -8,9 +8,9 @@ ENV CLOUD_SDK_VERSION=413.0.0 \
     # https://github.com/kubernetes/kubernetes/releases
     KUBECTL_VERSION=1.26.1 \
     # https://github.com/GoogleCloudPlatform/cloud-sql-proxy/releases
-    SQLPROXY_VERSION=1.33.2 \
+    SQLPROXY_VERSION=2.1.1 \
    # https://github.com/msoap/shell2http/releases
-    SHELL2HTTP_VERSION=1.14.2 \
+    SHELL2HTTP_VERSION=1.15.0 \
     PATH=/google-cloud-sdk/bin:$PATH
 
 COPY --from=helm /usr/bin/helm /usr/local/bin/helm
@@ -42,7 +42,7 @@ RUN apk --no-cache add \
 # install beta components
     gcloud components install beta -q && \
 # install cloud_sql_proxy
-    curl -fsSL https://storage.googleapis.com/cloudsql-proxy/v$SQLPROXY_VERSION/cloud_sql_proxy.linux.amd64 -o /usr/local/bin/cloud_sql_proxy && \
+    curl -fsSL https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v$SQLPROXY_VERSION/cloud-sql-proxy.linux.amd64 -o /usr/local/bin/cloud_sql_proxy && \
     chmod +x /usr/local/bin/cloud_sql_proxy && \
 # install rclone
     cd /tmp && \
