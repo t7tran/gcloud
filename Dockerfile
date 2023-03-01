@@ -60,7 +60,7 @@ RUN apk --no-cache add \
     tar -C /usr/local/bin -xvzf -  --wildcards --no-anchored shell2http && \
 # prepare config folder for non-root user
     mkdir /.config && chmod 777 /.config && \
-    apk add --no-cache jq coreutils mysql-client grep && \
+    apk add --no-cache jq coreutils mysql-client mariadb-connector-c grep && \
     chmod +x /*.sh && \
 # clean up
     rm -rf /apk /tmp/* /var/cache/apk/*
