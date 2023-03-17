@@ -10,7 +10,7 @@ ENV CLOUD_SDK_VERSION=413.0.0 \
     # https://github.com/GoogleCloudPlatform/cloud-sql-proxy/releases
     SQLPROXY_VERSION=2.1.1 \
    # https://github.com/msoap/shell2http/releases
-    SHELL2HTTP_VERSION=1.15.0 \
+    SHELL2HTTP_VERSION=1.16.0 \
     PATH=/google-cloud-sdk/bin:$PATH
 
 COPY --from=helm /usr/bin/helm /usr/local/bin/helm
