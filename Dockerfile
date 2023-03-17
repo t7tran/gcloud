@@ -4,7 +4,7 @@ FROM alpine/helm:2.17.0 AS helm
 FROM alpine:3.17
 
     # https://cloud.google.com/sdk/docs/release-notes
-ENV CLOUD_SDK_VERSION=413.0.0 \
+ENV CLOUD_SDK_VERSION=422.0.0 \
     # https://github.com/kubernetes/kubernetes/releases
     KUBECTL_VERSION=1.26.1 \
     # https://github.com/GoogleCloudPlatform/cloud-sql-proxy/releases
